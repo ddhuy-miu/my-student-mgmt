@@ -1,7 +1,9 @@
 package miu.cs425.mystudentmgmt;
 
 import miu.cs425.mystudentmgmt.models.Student;
+import miu.cs425.mystudentmgmt.models.Transcript;
 import miu.cs425.mystudentmgmt.services.StudentService;
+import miu.cs425.mystudentmgmt.services.TranscriptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,6 +16,9 @@ public class MyStudentMgmtApplication implements CommandLineRunner {
     @Autowired
     private StudentService studentService;
 
+    @Autowired
+    private TranscriptService transcriptService;
+
     public static void main(String[] args) {
         SpringApplication.run(MyStudentMgmtApplication.class, args);
     }
@@ -24,14 +29,21 @@ public class MyStudentMgmtApplication implements CommandLineRunner {
         System.out.println("Starting MyStudentMgmtApplication");
 
         System.out.println("Insert new Student");
-        Student student1 = new Student();
-        student1.setStudentId(1L);
-        student1.setStudentNumber(" 000-61-0001");
-        student1.setFirstName("Anna");
-        student1.setMiddleName("Lynn");
-        student1.setLastName("Smith");
-        student1.setCgpa(3.45);
-        student1.setDateOfEnrollment(new Date("2019/5/4"));
-        studentService.insertStudent(student1);
+        Student student = new Student();
+        student.setStudentId(1L);
+        student.setStudentNumber(" 000-61-0001");
+        student.setFirstName("Anna");
+        student.setMiddleName("Lynn");
+        student.setLastName("Smith");
+        student.setCgpa(3.45);
+        student.setDateOfEnrollment(new Date("2019/5/4"));
+
+        student = studentService.insertStudent(student);
+        System.out.println(student);
+
+        System.out.println("Update Transcript to Student");
+        student.setTranscript( new Transcript(1L, "BS Computer Science"));
+        student = studentService.updateStudent(student);
+        System.out.println(student);
     }
 }

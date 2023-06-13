@@ -1,7 +1,9 @@
 package miu.cs425.mystudentmgmt.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "transcripts")
 public class Transcript {
@@ -11,6 +13,9 @@ public class Transcript {
     private Long transcriptId;
 
     private String degreeTitle;
+
+    @OneToOne(mappedBy = "transcript")
+    private Student student;
 
     public Transcript() {
     }
@@ -26,21 +31,5 @@ public class Transcript {
                 "transcriptId=" + transcriptId +
                 ", degreeTitle='" + degreeTitle + '\'' +
                 '}';
-    }
-
-    public Long getTranscriptId() {
-        return transcriptId;
-    }
-
-    public void setTranscriptId(Long transcriptId) {
-        this.transcriptId = transcriptId;
-    }
-
-    public String getDegreeTitle() {
-        return degreeTitle;
-    }
-
-    public void setDegreeTitle(String degreeTitle) {
-        this.degreeTitle = degreeTitle;
     }
 }

@@ -3,9 +3,11 @@ package miu.cs425.mystudentmgmt.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
 import java.util.Date;
 
+@Data
 @Entity
 @Table(name = "students")
 public class Student {
@@ -33,6 +35,10 @@ public class Student {
 
     private Date dateOfEnrollment;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "transcriptId", referencedColumnName = "transcriptId")
+    private Transcript transcript;
+
     public Student() {
     }
 
@@ -54,62 +60,9 @@ public class Student {
                 ", studentNumber='" + studentNumber + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", middleName='" + middleName + '\'' +
+                ", cgpa='" + cgpa + '\'' +
+                ", dateOfEnrollment='" + dateOfEnrollment + '\'' +
+                ", transcript='" + transcript + '\'' +
                 '}';
-    }
-
-    public Long getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
-    }
-
-    public @NotNull String getStudentNumber() {
-        return studentNumber;
-    }
-
-    public void setStudentNumber(@NotNull String studentNumber) {
-        this.studentNumber = studentNumber;
-    }
-
-    public @NotNull String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(@NotNull String firstName) {
-        this.firstName = firstName;
-    }
-
-    public @NotNull String getMiddleName() {
-        return middleName;
-    }
-
-    public void setMiddleName(@NotNull String middleName) {
-        this.middleName = middleName;
-    }
-
-    public @NotNull String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(@NotNull String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Double getCgpa() {
-        return cgpa;
-    }
-
-    public void setCgpa(Double cgpa) {
-        this.cgpa = cgpa;
-    }
-
-    public Date getDateOfEnrollment() {
-        return dateOfEnrollment;
-    }
-
-    public void setDateOfEnrollment(Date dateOfEnrollment) {
-        this.dateOfEnrollment = dateOfEnrollment;
     }
 }
