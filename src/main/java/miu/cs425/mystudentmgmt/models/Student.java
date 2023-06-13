@@ -39,11 +39,16 @@ public class Student {
     @JoinColumn(name = "transcriptId", referencedColumnName = "transcriptId")
     private Transcript transcript;
 
+    @ManyToOne
+    @JoinColumn(name = "classroomId", referencedColumnName = "classroomId")
+    private Classroom classroom;
+
     public Student() {
     }
 
     public Student(Long studentId, @NotNull String studentNumber, @NotNull String firstName,
-                   @NotNull String middleName, @NotNull String lastName, Double cgpa, Date dateOfEnrollment) {
+                   @NotNull String middleName, @NotNull String lastName, Double cgpa, Date dateOfEnrollment,
+                   Transcript transcript, Classroom classroom) {
         this.studentId = studentId;
         this.studentNumber = studentNumber;
         this.firstName = firstName;
@@ -51,6 +56,8 @@ public class Student {
         this.lastName = lastName;
         this.cgpa = cgpa;
         this.dateOfEnrollment = dateOfEnrollment;
+        this.transcript = transcript;
+        this.classroom = classroom;
     }
 
     @Override
