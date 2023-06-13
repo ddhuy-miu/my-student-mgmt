@@ -3,10 +3,13 @@ package miu.cs425.mystudentmgmt.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
+@AllArgsConstructor
 @Data
 @Entity
 @Table(name = "students")
@@ -43,21 +46,13 @@ public class Student {
     @JoinColumn(name = "classroomId", referencedColumnName = "classroomId")
     private Classroom classroom;
 
-    public Student() {
-    }
+    @ManyToMany
+    @JoinTable(name = "students_courses",
+            joinColumns = {@JoinColumn(name = "studentId", referencedColumnName = "studentId")},
+            inverseJoinColumns = {@JoinColumn(name = "courseId", referencedColumnName = "courseId")})
+    private List<Course> courses;
 
-    public Student(Long studentId, @NotNull String studentNumber, @NotNull String firstName,
-                   @NotNull String middleName, @NotNull String lastName, Double cgpa, Date dateOfEnrollment,
-                   Transcript transcript, Classroom classroom) {
-        this.studentId = studentId;
-        this.studentNumber = studentNumber;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.cgpa = cgpa;
-        this.dateOfEnrollment = dateOfEnrollment;
-        this.transcript = transcript;
-        this.classroom = classroom;
+    public Student() {
     }
 
     @Override

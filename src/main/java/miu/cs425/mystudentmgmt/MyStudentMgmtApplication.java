@@ -1,9 +1,11 @@
 package miu.cs425.mystudentmgmt;
 
 import miu.cs425.mystudentmgmt.models.Classroom;
+import miu.cs425.mystudentmgmt.models.Course;
 import miu.cs425.mystudentmgmt.models.Student;
 import miu.cs425.mystudentmgmt.models.Transcript;
 import miu.cs425.mystudentmgmt.services.ClassroomService;
+import miu.cs425.mystudentmgmt.services.CourseService;
 import miu.cs425.mystudentmgmt.services.StudentService;
 import miu.cs425.mystudentmgmt.services.TranscriptService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class MyStudentMgmtApplication implements CommandLineRunner {
 
     @Autowired
     private ClassroomService classroomService;
+
+    @Autowired
+    private CourseService courseService;
 
     public static void main(String[] args) {
         SpringApplication.run(MyStudentMgmtApplication.class, args);
@@ -65,24 +70,31 @@ public class MyStudentMgmtApplication implements CommandLineRunner {
 
         System.out.println("============================");
         System.out.println("Update Transcript to Student");
-        student.setTranscript(new Transcript(1L, "BS Computer Science"));
+        student.setTranscript(new Transcript(1L, "BS Computer Science", student));
         student = studentService.updateStudent(student);
         System.out.println(student);
 
         System.out.println("============================");
         System.out.println("Update Transcript to Student");
-        student2.setTranscript(new Transcript(2L, "MS Computer Science"));
+        student2.setTranscript(new Transcript(2L, "MS Computer Science", student2));
         student2 = studentService.updateStudent(student2);
         System.out.println(student2);
 
-        System.out.println("================");
-        System.out.println("Create Classroom");
-        Classroom classroom = new Classroom(1L, "McLaughlin building", "M105");
         List<Student> students = new ArrayList<>();
         students.add(student);
         students.add(student2);
-        classroom.setStudents(students);
+
+        System.out.println("================");
+        System.out.println("Create Classroom");
+        Classroom classroom = new Classroom(1L, "McLaughlin building", "M105", students);
         classroom = classroomService.insertClassroom(classroom);
         System.out.println(classroom);
+
+
+        System.out.println("================");
+        System.out.println("Create new Course");
+        Course course = new Course(1L, "CS401", "Modern Prog Practices", students);
+        course = courseService.insertCourse(course);
+        System.out.println(course);
     }
 }

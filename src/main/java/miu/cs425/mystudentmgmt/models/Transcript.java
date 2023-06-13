@@ -1,8 +1,10 @@
 package miu.cs425.mystudentmgmt.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
+@AllArgsConstructor
 @Data
 @Entity
 @Table(name = "transcripts")
@@ -18,11 +20,6 @@ public class Transcript {
     private Student student;
 
     public Transcript() {
-    }
-
-    public Transcript(Long transcriptId, String degreeTitle) {
-        this.transcriptId = transcriptId;
-        this.degreeTitle = degreeTitle;
     }
 
     @Override

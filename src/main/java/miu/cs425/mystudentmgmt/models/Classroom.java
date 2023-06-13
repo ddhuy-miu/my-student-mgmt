@@ -1,10 +1,12 @@
 package miu.cs425.mystudentmgmt.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.List;
 
+@AllArgsConstructor
 @Data
 @Entity
 @Table(name = "Classrooms")
@@ -21,12 +23,6 @@ public class Classroom {
     private List<Student> students;
 
     public Classroom() {
-    }
-
-    public Classroom(Long classroomId, String buildingName, String roomNumber) {
-        this.classroomId = classroomId;
-        this.buildingName = buildingName;
-        this.roomNumber = roomNumber;
     }
 
     @Override
