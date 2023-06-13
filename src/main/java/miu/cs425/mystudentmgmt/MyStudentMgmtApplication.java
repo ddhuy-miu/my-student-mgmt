@@ -80,9 +80,21 @@ public class MyStudentMgmtApplication implements CommandLineRunner {
         student2 = studentService.updateStudent(student2);
         System.out.println(student2);
 
+        Student student3 = new Student();
+        student3.setStudentId(3L);
+        student3.setStudentNumber("000-61-0002");
+        student3.setFirstName("Mai");
+        student3.setMiddleName("Hoa Thi");
+        student3.setLastName("Nguyen");
+        student3.setCgpa(3.5);
+        student3.setDateOfEnrollment(new Date("2023/7/13"));
+        student3 = studentService.updateStudent(student3);
+        System.out.println(student3);
+
         List<Student> students = new ArrayList<>();
         students.add(student);
         students.add(student2);
+        students.add(student3);
 
         System.out.println("================");
         System.out.println("Create Classroom");
@@ -90,11 +102,19 @@ public class MyStudentMgmtApplication implements CommandLineRunner {
         classroom = classroomService.insertClassroom(classroom);
         System.out.println(classroom);
 
-
         System.out.println("================");
         System.out.println("Create new Course");
-        Course course = new Course(1L, "CS401", "Modern Prog Practices", students);
+        Course course = new Course(1L, "CS401", "Modern Programming Practices", students);
         course = courseService.insertCourse(course);
         System.out.println(course);
+
+        System.out.println("=======================");
+        System.out.println("Update Student - Course");
+        List<Course> courses = new ArrayList<>();
+        courses.add(course);
+        for (Student s : students) {
+            s.setCourses(courses);
+            studentService.updateStudent(s);
+        }
     }
 }
